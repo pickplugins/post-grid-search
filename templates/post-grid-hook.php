@@ -74,6 +74,12 @@ add_action('post_grid_search', 'post_grid_search_keyword_field');
 
 function post_grid_search_keyword_field($args){
 
+
+//    $grid_id = isset($args['grid_id']) ? $args['grid_id'] : '';
+//    if($grid_id != 7) return;
+//    // 7 is grid ID where you want to display this input field
+    
+
     $pgs_keyword = isset($_GET['pgs_keyword']) ? sanitize_text_field($_GET['pgs_keyword']) : '';
 
     ?>
