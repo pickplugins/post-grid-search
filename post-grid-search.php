@@ -3,7 +3,7 @@
 Plugin Name: Post Grid Search by PickPlugins
 Plugin URI: https://www.pickplugins.com/item/post-grid-create-awesome-grid-from-any-post-type-for-wordpress/
 Description: Awesome post grid for query post from any post type and display on grid.
-Version: 3.2.20
+Version: 1.0.0
 Author: PickPlugins
 Author URI: https://www.pickplugins.com/
 License: GPLv2 or later

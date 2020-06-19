@@ -35,11 +35,11 @@ function post_grid_search_form($args){
 
     //echo '<pre>'.var_export($_SERVER, true).'</pre>';
 
-    $page_url = '';
+    $page_url = get_permalink(get_the_ID());
 
     ?>
     <div class="post-grid-search">
-        <form action="#<?php //echo $page_url; ?>" method="get">
+        <form action="<?php echo $page_url; ?>" method="get">
             <?php
 
             do_action('post_grid_search', $args);
@@ -76,9 +76,9 @@ function post_grid_search_keyword_field($args){
 
 
 //    $grid_id = isset($args['grid_id']) ? $args['grid_id'] : '';
-//    if($grid_id != 7) return;
-//    // 7 is grid ID where you want to display this input field
-    
+//    if($grid_id != 2147) return;
+    // 7 is grid ID where you want to display this input field
+
 
     $pgs_keyword = isset($_GET['pgs_keyword']) ? sanitize_text_field($_GET['pgs_keyword']) : '';
 
@@ -118,7 +118,7 @@ function post_grid_search_category_field($args){
         <div class="field-label">Category</div>
         <div class="field-input">
             <select name="pgs_category">
-                <option><?php echo __('Choose category', ''); ?></option>
+                <option value=""><?php echo __('Choose category', ''); ?></option>
                 <?php
 
                 if(!empty($terms))
@@ -126,9 +126,10 @@ function post_grid_search_category_field($args){
 
                     $term_id = isset($term->term_id) ? $term->term_id : '';
                     $term_name = isset($term->name) ? $term->name : '';
+                    $term_count = isset($term->count) ? $term->count : 0;
 
                     ?>
-                    <option <?php echo selected($term_id, $pgs_category)?> value="<?php echo $term_id; ?>"><?php echo $term_name; ?></option>
+                    <option <?php echo selected($term_id, $pgs_category)?> value="<?php echo $term_id; ?>"><?php echo $term_name; ?>(<?php echo $term_count; ?>)</option>
                     <?php
 
                 }
@@ -165,7 +166,7 @@ function post_grid_search_post_tag_field($args){
         <div class="field-label">Tags</div>
         <div class="field-input">
             <select name="pgs_tag">
-                <option><?php echo __('Choose tags', ''); ?></option>
+                <option value=""><?php echo __('Choose tags', ''); ?></option>
                 <?php
 
                 if(!empty($terms))
@@ -173,9 +174,10 @@ function post_grid_search_post_tag_field($args){
 
                         $term_id = isset($term->term_id) ? $term->term_id : '';
                         $term_name = isset($term->name) ? $term->name : '';
+                        $term_count = isset($term->count) ? $term->count : 0;
 
                         ?>
-                        <option <?php echo selected($term_id, $pgs_tag)?> value="<?php echo $term_id; ?>"><?php echo $term_name; ?></option>
+                        <option <?php echo selected($term_id, $pgs_tag)?> value="<?php echo $term_id; ?>"><?php echo $term_name; ?>(<?php echo $term_count; ?>)</option>
                         <?php
 
                     }
@@ -199,6 +201,8 @@ function post_grid_search_post_tag_field($args){
 
 function post_grid_query_custom_search($query_args, $args){
 
+    $tax_query = isset($query_args['tax_query']) ? $query_args['tax_query'] : array();
+
     $current_post_id = get_the_ID();
 
     $pgs_tag = isset($_GET['pgs_tag']) ? sanitize_text_field($_GET['pgs_tag']) : '';
@@ -206,6 +210,26 @@ function post_grid_query_custom_search($query_args, $args){
     $pgs_keyword = isset($_GET['pgs_keyword']) ? sanitize_text_field($_GET['pgs_keyword']) : '';
 
     $query_args['s'] = $pgs_keyword;
+
+    if(!empty($pgs_category)){
+        $tax_query[] = array(
+            'taxonomy' => 'category',
+            'field'    => 'term_id',
+            'terms'    => array($pgs_category),
+        );
+    }
+
+    if(!empty($pgs_tag)){
+        $tax_query[] = array(
+            'taxonomy' => 'post_tag',
+            'field'    => 'term_id',
+            'terms'    => array($pgs_tag),
+        );
+    }
+
+    $query_args['tax_query'] = $tax_query;
+
+    //echo '<pre>'.var_export($query_args, true).'</pre>';
 
     return $query_args;
 }
