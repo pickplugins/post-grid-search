@@ -196,6 +196,23 @@ function post_grid_search_post_tag_field($args){
 
 
 
+add_action('post_grid_search', 'post_grid_search_post_reset_field');
+
+function post_grid_search_post_reset_field($args){
+
+    ?>
+    <div class="field-wrap">
+        <div class="field-label"></div>
+        <div class="field-input">
+            <input type="reset" value="Reset">
+        </div>
+    </div>
+
+    <?php
+
+}
+
+
 
 // Process form data and post query
 
@@ -227,9 +244,13 @@ function post_grid_query_custom_search($query_args, $args){
         );
     }
 
+    //$tax_query['relation'] = 'AND';
+
     $query_args['tax_query'] = $tax_query;
 
-    //echo '<pre>'.var_export($query_args, true).'</pre>';
+    //echo '<pre>'.var_export($tax_query, true).'</pre>';
+
+
 
     return $query_args;
 }
