@@ -18,7 +18,7 @@ Almost everything is ready to create post grid from any post types, with few cli
 
 ### Post Grid by  [http://pickplugins.com](http://pickplugins.com)
 
-* [See the Live demo](http://www.pickplugins.com/demo/post-grid/?ref=wordpress.org)
+* [See the Live demo](https://www.pickplugins.com/demo/post-grid/?ref=wordpress.org)
 * [Buy Premium](https://www.pickplugins.com/item/post-grid-create-awesome-grid-from-any-post-type-for-wordpress/?ref=wordpress.org)
 * [Documentation](http://pickplugins.com/documentation/post-grid/?ref=wordpress.org)
 * [Support](https://www.pickplugins.com/support/?ref=wordpress.org)
